@@ -526,11 +526,25 @@ Example: Cindy's Puzzle</font></b></p>
                 </table>
             </td>
         </tr>
-    
-        <tr> 
+      </tbody>
+    </table>
+    <br>
+    <table align="center">
+    <tbody>
+        <tr>
             <td width="150px"><b>Stuck!</b></td>
-            <td width="44"></td>
-           </tr>
+            <td>
+                <table style="background-color: lightgray ;" border="1" cellpadding="8" cellspacing="0">
+                    <tr>
+                        <td> width="44"></td>
+                        <td> width="44"></td>
+                        <td  width="44"></td>
+                        <td> width="44"></td>
+                        <td> width="44"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
     </tbody>
 </table>
 <p>Now to the program. The main program will initialize the board, and call a recursive backtracking routine to attempt to solve the puzzle. The backtracking routine will either succeed and print out a winning path, or it will fail, and the main program will have to print out the bad news.</p>
