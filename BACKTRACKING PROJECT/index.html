@@ -100,7 +100,6 @@ Non-recursive backtracking, using a stack</font></b></p>
 <p>When the stack algorithm terminates successfully, the nodes on the stack form (in reverse order) a path from the rto a goal node.</p>
 <p>Similarly, when the recursive algorithm finds a goal node, the path information is embodied (in reverse order) in sequence of recursive calls. Thus as the recursion unwinds, the path can be recovered one node at a time, by (instance) printing the node at the current level, or storing it in an array.</p>
 <p>Here is the recursive backtracking algorithm, modified slightly to print (in reverse order) the nodes along successful path:</p>
-<blockquote>
 <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;"> 
 boolean solve(Node n) {
     if n is a leaf node {
@@ -120,7 +119,6 @@ boolean solve(Node n) {
     }
 }
 </pre>
-</blockquote>
 <p><b><font size="+1"><br />
 Keeping backtracking simple</font></b></p>
 <p>All of these versions of the backtracking algorithm are pretty simple, but when applied to a real problem, can get pretty cluttered up with details. Even determining whether the node is a leaf can be complex: for examplethe path represents a series of moves in a chess endgame problem, the leaves are the checkmate and stalesolutions.</p>
@@ -134,10 +132,9 @@ Keeping backtracking simple</font></b></p>
 <p><b><font size="+1"><br />
 Example: TreeSearch</font></b></p>
 <p>For starters, let's do the simplest possible example of backtracking, which is searching an actual trewill also use the simplest kind of tree, a binary tree.</p>
-<p>A  <b>binary tree</b> is a data structure composed of <b>nodes</b>. One node is designated as the <bnode</b>. Each node can reference (point to) zero, one, or two other nodes, which are called its <b>childrenThe children are referred to as the <b>left child</b> and/or the <b>right child</b>. All nodes are reachablone or more steps) from the root node, and there are no cycles. For our purposes, although this is not pathe definition of a binary tree, we will say that a node might or might not be a goal node, and will containame. The first example in this paper (which we repeat here) shows a binary tree.</p>
-<p align="center" ><img src="https://www.cis.upenn.edu/~matuszek/cit594-2012/Pages/backtracking_files/treesgif" alt=""></p>
+ <p>A<b>binary tree</b> is a data structure composed of <b>nodes</b>. One node is designated as the <b>root node</b>. Each node can reference (point to) zero, one, or two other nodes, which are called its <b>children</b>. The children are referred to as the <b>left child</b> and/or the <b>right child</b>. All nodes are reachable (by one or more steps) from the root node, and there are no cycles. For our purposes, although this is not part of the definition of a binary tree, we will say that a node might or might not be a goal node, and will contain its name. The first example in this paper (which we repeat here) shows a binary tree.</p>
+<p align="center" ><img src="https://www.cis.upenn.edu/~matuszek/cit594-2012/Pages/backtracking_files/treesearch.gif"></p>
 <p>Here's a definition of the BinaryTree class:</p>
-<blockquote>
 <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;">
     public class BinaryTree {
      BinaryTree leftChild = null;
@@ -153,9 +150,7 @@ Example: TreeSearch</font></b></p>
     }
     }   
 </pre>
-</blockquote>
 <p>Next we will create a <code> TreeSearch class</code>, and in it we will define a method <code>makeTree()</code> which constructs the above binary tree.</p>
-<blockquote>
 <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;">
     static BinaryTree makeTree() {
     BinaryTree root, a, b, c, d, e, f;
@@ -169,18 +164,15 @@ Example: TreeSearch</font></b></p>
     return root;
     }
 </pre>
-</blockquote>
 <p>Here's a main program to create a binary tree and try to solve it:</p>
-<blockquote>
 <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;">
     public static void main(String args[]) {
     BinaryTree tree = makeTree();
     System.out.println(solvable(tree));
     }
 </pre>
-</blockquote>
 <p>And finally, here's the recursive backtracking routine to "solve" the binary tree by finding a goal node.</p>
-<blockquote>
+
 <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;">
 static boolean solvable(BinaryTree node) {
 <span style="color:blue;">/* 1 */  </span> if (node == null) return false;
@@ -190,7 +182,6 @@ static boolean solvable(BinaryTree node) {
 <span style="color:blue;">/* 5 */  </span> return false;
 }
 </pre>
-</blockquote>
 <p>Here's what the numbered lines are doing:</p>
 <ol>
     <li>If we are given a null node, it's not solvable. This statement is so that we can call this method with the children of a node, without first checking whether those children actually exist.</li>
@@ -201,7 +192,6 @@ static boolean solvable(BinaryTree node) {
 </ol>
 <p>This program runs correctly and produces the unenlightening result <code>true</code>.</p>
 <p>Each time we ask for another node, we have to check if it is null. In the above we put that check as the first thing in <code>solvable</code>. An alternative would be to check first whether each child exists, and recur only if they do. Here's that alternative version:</p>
-<blockquote>
 <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;">
     static boolean solvable(BinaryTree node) {
     if (node.isGoalNode) return true;
@@ -210,7 +200,6 @@ static boolean solvable(BinaryTree node) {
     return false;
     }
 </pre>
-</blockquote>
 <p>I think the first version is simpler, but the second version is slightly more efficient. </p>
 <p><b><font size="+1"><br />
 What are the children?</font></b></p>
@@ -240,7 +229,6 @@ What are the children?</font></b></p>
   row and column of the next square on the checkerboard).</dd>
  </dl>
  <p>Here's the code for method 1:</p>
-<blockquote>
     <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;">
 boolean explore1(int row, int column, int color) {
 if (row >= NUM_ROWS) <b> return mapIsOK()</b>;
@@ -252,9 +240,7 @@ for (int nextColor = RED; nextColor <= BLUE; nextColor++) {
 return false;
 }
 </pre>
-</blockquote>
 <p>And here's the code for method 2:</p>
-<blockquote>
     <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;">boolean explore2(int row, int column, int color) {
       if (row >= NUM_ROWS) <b>return true;
           if (okToColor(row, column, color)) {</b>
@@ -265,8 +251,8 @@ return false;
           }
       }
       return false;
-  }</pre>
-</blockquote>
+  }
+  </pre>
 <p>Those appear pretty similar, and you might think they are equally good. However, the timing information suggests otherwise:</p>
 <table border="2px" style="margin:auto ;" >
   <tr>
@@ -296,7 +282,6 @@ Debugging techniques</b></font></p>
 <p><b>Trick #1: Indent when you print method entries and exits.</b>  Often, the best debugging technique is to print every methodcall and return (or at least the most important ones). You probably want to print, for each method, what parameters it came in with,and what value it leaves with. However, if you just print a long list of these, it's hard to match up method exits with theircorresponding entries. Indenting to show the level of nesting can help.</p>
 <p><b>Trick #2: Use specialized print methods for debugging.</b> Don't clutter up your actual code more than you must. Also, rememberthat code inserted for debugging purposes can itself contain bugs, or (in the worst case) can affect the results, so be very carefulwith it.</p>
 <p>Here's our debugging code. For this trivial program, there's almost more debugging code than actual code, but in larger programs the proportions will be better.</p>
-<blckquote>
 <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;">
     static String indent
     static String name(BinaryTree node) {
@@ -321,9 +306,8 @@ Debugging techniques</b></font></p>
         return false;
     }
 </pre>
-</blockquote>
 <p>To use this code, we modify solvable as follows:</p>
-<blockquote>
+
 <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;">
 static boolean solvable(BinaryTree node) {
 <b>enter(node);</b>
@@ -356,10 +340,10 @@ return <b>return yes(node);</b>
 |  |  solvable(E) returns true
 |  solvable(B) returns true
 solvable(Root) returns true
-true</b></pre><p><b>Trick #3: Never discard your debugging statements.</b>Writing debugging statements is programming, too. Often it's as much work to debug the debugging statements as it is to debug the actual program. Once your program is working, why throw this code away?</p>
+true</b></pre>
+<p><b>Trick #3: Never discard your debugging statements.</b>Writing debugging statements is programming, too. Often it's as much work to debug the debugging statements as it is to debug the actual program. Once your program is working, why throw this code away?</p>
 <p>Obviously, you don't want to print out all this debugging information from a program you are ready to submit (or to turn over to your manager). You could comment out your debugging calls, but that can be a lot of work. What's more, in the above example, you would have to replace every <code>return(yes(node))</code>  with <code>return(true)</code>, and every <code>return(no(node))</code> with <code>return false</code>. With all these changes, you might introduce new bugs into your program.</p>
 <p>The simple solution is to make your debugging statements conditional. For example,</p>
-<blockquote>
 <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;" >static final boolean debugging = false;
 
     static void enter(BinaryTree node) {
@@ -385,15 +369,14 @@ true</b></pre><p><b>Trick #3: Never discard your debugging statements.</b>Writin
       return false;
     }
  </pre>
-</blockquote>
 <p>In industry, actual programs often have multiple flags to control different aspects of debugging. Don't worry too much about making your code larger; modern compilers will notice that since the variable <code>debugging </code> is <code>final</code>, it can never be <code>true</code>, and the controlled code will be discarded.</p>
 <p><b>Trick #4: Create an Exception.</b> If an Exception is thrown, you can get information about just where it happened by sending it the message <b>printStackTrace(PrintStream)</b>. Since an Exception is an object like any other, you can create and <code>throw</code> your own Exceptions. However, Java programmers don't always realize that you can create an Exception <i>without</i> throwing it. For example, the following code</p>
-<blockquote>
+
     <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;" >new Exception("Checkpoint Charlie").printStackTrace(System.out);
     </pre>
-</blockquote>
+
 <p>will print out a message something like this, and the program will then continue normally. That is, the above code just acts like a print statement.</p>
-<blockquote>
+
 <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;">java.lang.Exception: Checkpoint Charlie
 at TreeSearch.solvable(TreeSearch.java:53)
 at TreeSearch.solvable(TreeSearch.java:57)
@@ -401,27 +384,26 @@ at TreeSearch.main(TreeSearch.java:72)
 at __SHELL38.run(__SHELL38.java:16)
 at bluej.runtime.ExecServer.suspendExecution(Unknown Source)
 </pre>
-</blockquote>
 <p><b><font size="+1"><br/>
 Example: Cindy's Puzzle</font></b></p>
 <p>I call the following puzzle "Cindy's puzzle" for historical reasons. You have some number <code>n</code> of black marbles and the same number of white marbles, and you have a playing board which consists simply of a line of <code>2n+1</code> spaces to put the marbles in. Start with the black marbles all at one end (say, the left), the white marbles all at the other end, and a free space in between.</p>
 <table style="background-color: lightgray ;" align="center" border="1" cellpading="6" cellspacing="0" >
     <tr>
-        <td><img src="/black-ball.gif" height="44" width="44" ></td>
-        <td><img src="/black-ball.gif" height="44" width="44"></td>
+        <td><img src="black-ball.gif" height="44" width="44" ></td>
+        <td><img src="black-ball.gif" height="44" width="44"></td>
         <td width="44" ></td>
-        <td><img src="/white-ball.gif" height="44" width="44"></td>
-        <td><img src="/white-ball.gif" height="44" width="44"></td>
+        <td><img src="white-ball.gif" height="44" width="44"></td>
+        <td><img src="white-ball.gif" height="44" width="44"></td>
     </tr>
 </table>
 <p>The goal is to reverse the positions of the marbles:</p>
 <table style="background-color: lightgray ;" align="center" border="1" cellpading="6" cellspacing="0" >
     <tr>
-        <td><img src="/white-ball.gif" height="44" width="44" ></td>
-        <td><img src="/white-ball.gif" height="44" width="44"></td>
+        <td><img src="white-ball.gif" height="44" width="44" ></td>
+        <td><img src="white-ball.gif" height="44" width="44"></td>
         <td width="44" ></td>
-        <td><img src="/black-ball.gif" height="44" width="44"></td>
-        <td><img src="/black-ball.gif" height="44" width="44"></td>
+        <td><img src="black-ball.gif" height="44" width="44"></td>
+        <td><img src="black-ball.gif" height="44" width="44"></td>
     </tr>
 </table>
 <p>The black marbles can only move to the right, and the white marbles can only move to the left (no backing up). At each move, a marble can either:</p>
@@ -437,11 +419,11 @@ Example: Cindy's Puzzle</font></b></p>
             <td>
                 <table style="background-color: lightgray ;" border="1" cellpadding="8" cellspacing="0">
                     <tr>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
-                        <td><img src="/black-ball.gif" height="44" width="44" ></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
+                        <td><img src="black-ball.gif" height="44" width="44" ></td>
                         <td width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44"></td>
                     </tr>
                 </table>
             </td>
@@ -457,11 +439,11 @@ Example: Cindy's Puzzle</font></b></p>
             <td>
                 <table style="background-color: lightgray ;" border="1" cellpadding="8" cellspacing="0">
                     <tr>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
                         <td width="44"></td>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44"></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44"></td>
                     </tr>
                 </table>
             </td>
@@ -476,11 +458,11 @@ Example: Cindy's Puzzle</font></b></p>
             <td>
                 <table style="background-color: lightgray ;" border="1" cellpadding="8" cellspacing="0">
                     <tr>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44"></td>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44"></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
                         <td width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44"></td>
                     </tr>
                 </table>
             </td>
@@ -495,11 +477,11 @@ Example: Cindy's Puzzle</font></b></p>
             <td>
                 <table style="background-color: lightgray ;" border="1" cellpadding="8" cellspacing="0">
                     <tr>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44"></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44"></td>
                         <td width="44"></td>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44"></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44"></td>
                     </tr>
                 </table>
             </td>
@@ -515,10 +497,10 @@ Example: Cindy's Puzzle</font></b></p>
                 <table style="background-color: lightgray ;" border="1" cellpadding="8" cellspacing="0">
                     <tr>
                         <td width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44" ></td>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44" ></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44"></td>
                         
                     </tr>
                 </table>
@@ -535,19 +517,31 @@ Example: Cindy's Puzzle</font></b></p>
                 <table style="background-color: lightgray ;" border="1" cellpadding="8" cellspacing="0">
                     <tr>
                         <td width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44" ></td>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
-                        <td><img src="/black-ball.gif" height="44" width="44"></td>
-                        <td><img src="/white-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44" ></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
+                        <td><img src="black-ball.gif" height="44" width="44"></td>
+                        <td><img src="white-ball.gif" height="44" width="44"></td>
                         
                     </tr>
                 </table>
             </td>
         </tr>
-        <tr> 
-            <td>Stuck!</td>
-            <td>&nbsp; </td>
-          </tr>
+        <table style="margin-top:20px;">
+        <tr>
+            <td align="left" style="width:180px;"><b>Stuck!</b></td>
+            <td>
+                <table>
+                    <tr>
+                        <td width="44px"></td>
+                        <td width="44px"></td>
+                        <td width="44px"></td>
+                        <td width="44px"></td>
+                        <td width="44px"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
     </tbody>
 </table>
 <p>Now to the program. The main program will initialize the board, and call a recursive backtracking routine to attempt to solve the puzzle. The backtracking routine will either succeed and print out a winning path, or it will fail, and the main program will have to print out the bad news.</p>
@@ -564,7 +558,6 @@ Example: Cindy's Puzzle</font></b></p>
 </ul>
 <p>We write another method <code>int[] makeMove(int[] oldBoard, int position)</code> that will take a board and a position, make a move from that position, and return as its value a new board. (We could write this somewhat more efficiently by changing the old board, rather than creating a new one, but here we are more concerned with simplicity.) In technical jargon, <code>makeMove</code> is "applicative" rather than "mutative."</p>
 <p>With these methods, our central backtracking method can be written as follows:</p>
-<blockquote>
  <pre style="color:rgb(115, 45, 45);font-family: Verdana , Arial , Helvetica, sans-serif;" >boolean solvable(int[] board) {
         if (puzzleSolved(board)) {
             return true;
@@ -580,46 +573,28 @@ Example: Cindy's Puzzle</font></b></p>
         }
         return false;
  }</pre>
-</blockquote>
 <p>Along with <code>canMove</code> and <code>makeMove</code>, we are using methods <code> puzzleSolved </code> and <code>printBoard</code> with meanings that should be obvious.</p>
 <p>Here is some output from the program:</p>
-<pre style="color:rgb(24, 23, 23);font-family: Verdana , Arial , Helvetica, sans-serif;">
-<span style="color:blue;">16.</span>  WHITE  WHITE  WHITE  _____  BLACK  BLACK  BLACK
-<span style="color:blue;">15.</span>  WHITE  WHITE  WHITE  BLACK  _____  BLACK  BLACK
-<span style="color:blue;">14.</span>  WHITE  WHITE  _____  BLACK  WHITE  BLACK  BLACK
-<span style="color:blue;">13.</span>  WHITE  _____  WHITE  BLACK  WHITE  BLACK  BLACK
-<span style="color:blue;">12.</span>  WHITE  BLACK  WHITE  _____  WHITE  BLACK  BLACK
-<span style="color:blue;">11.</span>  WHITE  BLACK  WHITE  BLACK  WHITE  _____  BLACK
-<span style="color:blue;">10.</span>  WHITE  BLACK  WHITE  BLACK  WHITE  BLACK  _____
-<span style="color:blue;">9.</span>   WHITE  BLACK  WHITE  BLACK  _____  BLACK  WHITE
-<span style="color:blue;">8.</span>   WHITE  BLACK  _____  BLACK  WHITE  BLACK  WHITE
-<span style="color:blue;">7.</span>   _____  BLACK  WHITE  BLACK  WHITE  BLACK  WHITE
-<span style="color:blue;">6.</span>   BLACK  _____  WHITE  BLACK  WHITE  BLACK  WHITE
-<span style="color:blue;">5.</span>   BLACK  BLACK  WHITE  _____  WHITE  BLACK  WHITE
-<span style="color:blue;">4.</span>   BLACK  BLACK  WHITE  BLACK  WHITE  _____  WHITE
-<span style="color:blue;">3.</span>   BLACK  BLACK  WHITE  BLACK  _____  WHITE  WHITE
-<span style="color:blue;">2.</span>   BLACK  BLACK  _____  BLACK  WHITE  WHITE  WHITE
-<span style="color:blue;">1.</span>   BLACK  BLACK  BLACK  _____  WHITE  WHITE  WHITE
+ <pre style="color:rgb(24, 23, 23);font-family: Verdana , Arial , Helvetica, sans-serif;">
+ <span style="color:blue;">16.</span>  WHITE  WHITE  WHITE  _____  BLACK  BLACK  BLACK
+ <span style="color:blue;">15.</span>  WHITE  WHITE  WHITE  BLACK  _____  BLACK  BLACK
+ <span style="color:blue;">14.</span>  WHITE  WHITE  _____  BLACK  WHITE  BLACK  BLACK
+ <span style="color:blue;">13.</span>  WHITE  _____  WHITE  BLACK  WHITE  BLACK  BLACK
+ <span style="color:blue;">12.</span>  WHITE  BLACK  WHITE  _____  WHITE  BLACK  BLACK
+ <span style="color:blue;">11.</span>  WHITE  BLACK  WHITE  BLACK  WHITE  _____  BLACK
+ <span style="color:blue;">10.</span>  WHITE  BLACK  WHITE  BLACK  WHITE  BLACK  _____
+ <span style="color:blue;">9.</span>   WHITE  BLACK  WHITE  BLACK  _____  BLACK  WHITE
+ <span style="color:blue;">8.</span>   WHITE  BLACK  _____  BLACK  WHITE  BLACK  WHITE
+ <span style="color:blue;">7.</span>   _____  BLACK  WHITE  BLACK  WHITE  BLACK  WHITE
+ <span style="color:blue;">6.</span>   BLACK  _____  WHITE  BLACK  WHITE  BLACK  WHITE
+ <span style="color:blue;">5.</span>   BLACK  BLACK  WHITE  _____  WHITE  BLACK  WHITE
+ <span style="color:blue;">4.</span>   BLACK  BLACK  WHITE  BLACK  WHITE  _____  WHITE
+ <span style="color:blue;">3.</span>   BLACK  BLACK  WHITE  BLACK  _____  WHITE  WHITE
+ <span style="color:blue;">2.</span>   BLACK  BLACK  _____  BLACK  WHITE  WHITE  WHITE
+ <span style="color:blue;">1.</span>   BLACK  BLACK  BLACK  _____  WHITE  WHITE  WHITE
 
 </pre>
 <p>Notice that the solution is given in reverse order: <code>BLACK</code> starts out on the left and <code>WHITE</code> on the right, as in the last line. I've added line numbers to the actual output in order to emphasize this point. Backtracking always produces its results (sequence of choices) in reverse order; it is up to you, the programmer, to reverse the results again to get them in the correct order.</p>
-
-
-
-
-
-
-
-
-
-
-
-        
-                   
-
-
-                
-
     
 </body>
 </html>
